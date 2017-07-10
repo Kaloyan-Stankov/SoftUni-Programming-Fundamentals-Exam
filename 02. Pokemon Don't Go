@@ -1,0 +1,48 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Exam
+{
+    class Program
+    {
+        public static void Main()
+        {
+            var pokemons = Console.ReadLine().Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries).Select(int.Parse).ToList();
+            long result = 0;
+            while (pokemons.Any())
+            {
+                var current = 0;
+                var index = int.Parse(Console.ReadLine());
+                if (index < 0)
+                {
+                    current = pokemons.First();
+                    pokemons[0] = pokemons.Last();
+                }
+                else if(index >= pokemons.Count)
+                {
+                    current = pokemons.Last();
+                    pokemons[pokemons.Count - 1] = pokemons.First();
+                }
+                else
+                {
+                    current = pokemons[index];
+                    pokemons.RemoveAt(index);
+                }
+
+                result += current;
+
+                for (int i = 0; i < pokemons.Count; i++)
+                {
+                    var pokemon = pokemons[i];
+                    pokemons[i] = pokemon <= current ? pokemon + current : pokemon - current;
+                }
+                    
+                
+            }
+            Console.WriteLine(result);
+        }
+    }
+}
