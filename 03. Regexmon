@@ -1,0 +1,50 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Text.RegularExpressions;
+
+namespace Exam
+{
+    class Program
+    {
+        public static void Main()
+        {
+            var bojoPattern = @"[A-Za-z]+-+[A-Za-z]+";
+            var didiPattern = @"[^A-Za-z-]+";
+            bool match = true;
+            string turn = "didi";
+            var input = Console.ReadLine();
+            while (match)
+            {
+                switch (turn)
+                {
+                    case "didi":
+                        if (!Regex.IsMatch(input, didiPattern))
+                        {
+                            match = false;
+                            break;
+                        }
+                        var result = Regex.Match(input, didiPattern);
+                        Console.WriteLine(result.Value);
+                        input = input.Remove(0, result.Index + result.Length);
+                        turn = "bojo";
+
+                        break;
+                    case "bojo":
+                        if (!Regex.IsMatch(input, bojoPattern))
+                        {
+                            match = false;
+                            break;
+                        }
+                        var result2 = Regex.Match(input, bojoPattern);
+                        Console.WriteLine(result2.Value);
+                        input = input.Remove(0, result2.Index + result2.Length);
+                        turn = "didi";
+                        break;
+                }
+            }
+        }
+    }
+}
