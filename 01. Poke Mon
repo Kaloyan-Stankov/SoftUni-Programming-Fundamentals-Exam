@@ -1,0 +1,45 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace Exam
+{
+    class Program
+    {
+        public static void Main()
+        {
+            int pokeP = int.Parse(Console.ReadLine());
+            var distance = int.Parse(Console.ReadLine());
+            var exhaust = int.Parse(Console.ReadLine());
+            var count = 0;
+            var originalN = pokeP;
+
+            while (true)
+            {
+                if (pokeP < distance)
+                {
+                    break;
+                }
+                var half = originalN / 2m;
+                if ((decimal)pokeP == half)
+                {
+                    if (exhaust != 0)
+                    {
+                        pokeP /= exhaust;
+                    }
+                }
+                if (pokeP < distance)
+                {
+                    break;
+                }
+                pokeP -= distance;
+                count++;
+            }
+
+            Console.WriteLine(pokeP);
+            Console.WriteLine(count);
+        }
+    }
+}
