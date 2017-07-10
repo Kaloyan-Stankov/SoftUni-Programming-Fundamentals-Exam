@@ -1,0 +1,67 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Text.RegularExpressions;
+
+namespace Exam
+{
+    class Program
+    {
+        public static void Main()
+        {
+            var pokemonEvo = new Dictionary<string, List<Evolution>>();
+            while (true)
+            {
+                var line = Console.ReadLine();
+                if (line == "wubbalubbadubdub")
+                {
+                    break;
+                }
+                var input = line.Split(new[] { '-', ' ', '>' }, StringSplitOptions.RemoveEmptyEntries).ToArray();
+                if (input.Length == 1)
+                {
+                    if (pokemonEvo.ContainsKey(input[0]))
+                    {
+                        Console.WriteLine($"# {input[0]}");
+                        foreach (var evo in pokemonEvo[input[0]])
+                        {
+                            Console.WriteLine($"{evo.type} <-> {evo.index}");
+                            continue;
+                        }
+                    }
+                }
+                else
+                {
+                    var pokemonName = input[0];
+                    var evolutionType = input[1];
+                    var evolutionIndex = int.Parse(input[2]);
+
+                    if (!pokemonEvo.ContainsKey(pokemonName))
+                    {
+                        pokemonEvo[pokemonName] = new List<Evolution>();
+                    }
+
+                    pokemonEvo[pokemonName].Add(new Evolution() {
+                        type = evolutionType,
+                        index = evolutionIndex
+                    });
+                }
+            }
+            foreach (var evo in pokemonEvo)
+            {
+                Console.WriteLine($"# {evo.Key}");
+                foreach (var e in evo.Value.OrderByDescending(e => e.index))
+                {
+                    Console.WriteLine($"{e.type} <-> {e.index}");
+                }
+            }
+        }
+    }
+    class Evolution
+    {
+        public string type { get; set; }
+        public int index { get; set; }
+    }
+}
